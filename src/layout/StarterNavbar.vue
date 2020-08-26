@@ -1,6 +1,6 @@
 <template>
   <navbar position="fixed" type="primary" menu-classes="ml-auto">
-    <template slot-scope="{ toggle, isToggled }">
+    <!-- <template slot-scope="{ toggle, isToggled }">
       <router-link v-popover:popover1 class="navbar-brand" to="/presentation">
         My Site Name
       </router-link>
@@ -15,30 +15,29 @@
           Designed by Invision. Coded by Creative Tim
         </div>
       </el-popover>
-    </template>
+    </template>-->
     <template slot="navbar-menu">
-      <drop-down tag="li" title="Sample Dropdown">
-        <nav-link class="dropdown-item">
-          <i class="now-ui-icons shopping_box"></i> Headers
-        </nav-link>
+      <drop-down tag="li" title=" Recursos" icon="now-ui-icons education_paper" class="nav-item">
+        <nav-link to="/afd">AFD</nav-link>
+        <nav-link to="/">AFN</nav-link>
       </drop-down>
     </template>
   </navbar>
 </template>
 
 <script>
-import { DropDown, NavbarToggleButton, Navbar, NavLink } from '@/components';
-import { Popover } from 'element-ui';
+import { DropDown, NavbarToggleButton, Navbar, NavLink } from "@/components";
+import { Popover } from "element-ui";
 
 export default {
-  name: 'main-navbar',
+  name: "main-navbar",
   components: {
     DropDown,
     Navbar,
     NavbarToggleButton,
     NavLink,
-    [Popover.name]: Popover
-  }
+    [Popover.name]: Popover,
+  },
 };
 </script>
 

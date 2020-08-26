@@ -44,13 +44,15 @@
               <fg-input class="no-border input-lg" placeholder="Símbolo" v-model="simbolo"></fg-input>
 
               <fg-input class="no-border input-lg" placeholder="Estado de destino" v-model="estado"></fg-input>
-
-              <div class="card-footer text-center">
-                <a
-                  @click="add_transicao"
-                  class="btn btn-primary btn-round btn-lg btn-block"
-                >Adicionar Transição</a>
-              </div>
+              <n-button
+                v-if="item_transicao.estado != '' && simbolo != '' && estado != ''"
+                class="btn-block"
+                type="primary"
+                size="lg"
+                round
+                @click="add_transicao"
+              >Adicionar Transição</n-button>
+              <n-button v-else class="btn-block" type="primary" size="lg" round>Adicionar Transição</n-button>
             </card>
           </div>
 
@@ -68,12 +70,13 @@
 
               <fg-input class="no-border input-lg" placeholder="String" v-model="texto"></fg-input>
 
-              <div class="card-footer text-center">
-                <a
-                  @click="automato"
-                  class="btn btn-primary btn-round btn-lg btn-block"
-                >Testar String</a>
-              </div>
+              <n-button
+                class="btn-block"
+                type="primary"
+                size="lg"
+                round
+                @click="automato"
+              >Testar String</n-button>
             </card>
           </div>
         </div>

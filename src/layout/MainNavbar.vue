@@ -10,8 +10,8 @@
       <a v-popover:popover1 class="navbar-brand" to="/">Teoria da Computação</a>
     </template>
     <template slot="navbar-menu">
-      <drop-down tag="li" title="Recursos" icon="now-ui-icons education_paper" class="nav-item">
-        <nav-link to="/login">AFD</nav-link>
+      <drop-down tag="li" title=" Recursos" icon="now-ui-icons education_paper" class="nav-item">
+        <nav-link to="/afd">AFD</nav-link>
         <nav-link to="/">AFN</nav-link>
       </drop-down>
     </template>
