@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Index from './pages/Index.vue';
 import Afd from './pages/Afd.vue';
+import Afn from './pages/Afn.vue';
 import MainNavbar from './layout/MainNavbar.vue';
 import MainFooter from './layout/MainFooter.vue';
 
@@ -12,17 +13,16 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'index',
-      components: { default: Index, header: MainNavbar, footer: MainFooter },
+      name: 'afd',
+      components: { default: Afd, header: MainNavbar },
       props: {
-        header: { colorOnScroll: 400 },
-        footer: { backgroundColor: 'black' }
+        header: { colorOnScroll: 400 }
       }
     },
     {
-      path: '/afd',
-      name: 'afd',
-      components: { default: Afd, header: MainNavbar },
+      path: '/afn',
+      name: 'afn',
+      components: { default: Afn, header: MainNavbar },
       props: {
         header: { colorOnScroll: 400 }
       }

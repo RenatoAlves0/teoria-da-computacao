@@ -18,8 +18,8 @@
     </template>-->
     <template slot="navbar-menu">
       <drop-down tag="li" title=" Recursos" icon="now-ui-icons education_paper" class="nav-item">
-        <nav-link to="/afd">AFD</nav-link>
-        <nav-link to="/">AFN</nav-link>
+        <nav-link to="/">AFD</nav-link>
+        <nav-link to="/afn">AFN</nav-link>
       </drop-down>
     </template>
   </navbar>
