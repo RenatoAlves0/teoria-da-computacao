@@ -17,10 +17,15 @@
                   placeholder="ex: q1 q2 q3"
                   v-model="estados_finais"
                 ></fg-input>
-                <a>*cada estado deve ser separado por espaço</a>
+                <a>cada estado deve ser separado por espaço</a>
 
                 <h5 style="margin-top: 15px">Função de Transição</h5>
-                <div style="margin-left: 1px" class="row" v-for="item in funcao_transicao" :key="item.estado">
+                <div
+                  style="margin-left: 1px"
+                  class="row"
+                  v-for="item in funcao_transicao"
+                  :key="item.estado"
+                >
                   <badge style="margin-right: 5px" type="info">{{item.estado}}</badge>
                   <div v-for="t in item.transicoes" :key="t.simbolo">
                     <badge
@@ -44,7 +49,7 @@
               <fg-input class="no-border input-lg" placeholder="Símbolo" v-model="simbolo"></fg-input>
 
               <fg-input class="no-border input-lg" placeholder="Estado de destino" v-model="estado"></fg-input>
-              <a>*colocar um estado de destino por vez. NÃO coloque todos de uma vez só</a>
+              <a>coloque um único estado de destino por vez</a>
               <n-button
                 v-if="item_transicao.estado != '' && simbolo != '' && estado != ''"
                 class="btn-block"
@@ -58,6 +63,7 @@
           </div>
 
           <div class="col-md-4 ml-auto mr-auto">
+            <h5 v-if="sequencia_execucao[0]">Sequência de Execução</h5>
             <card type="login" plain>
               <div v-if="sequencia_execucao[0]" style="margin-bottom:10px">
                 <div
@@ -82,6 +88,7 @@
               </div>
 
               <fg-input class="no-border input-lg" placeholder="String" v-model="texto"></fg-input>
+              <a>não insira simbolos que não fazem parte do alfabeto</a>
 
               <n-button
                 class="btn-block"
@@ -115,28 +122,10 @@ export default {
     return {
       sequencia_execucao: [],
       texto: "",
-      estado_inicial: "q0",
+      estado_inicial: "",
       estados_atuais: [],
-      estados_finais: "q2",
-      funcao_transicao: [
-        {
-          estado: "q0",
-          transicoes: [
-            { simbolo: "0", estado: "q0" },
-            { simbolo: "0", estado: "q1" },
-            { simbolo: "1", estado: "q1" },
-          ],
-        },
-        {
-          estado: "q1",
-          transicoes: [
-            { simbolo: "0", estado: "q0" },
-            { simbolo: "0", estado: "q1" },
-            { simbolo: "1", estado: "q2" },
-          ],
-        },
-        { estado: "q2" },
-      ],
+      estados_finais: "",
+      funcao_transicao: [],
       item_transicao: {
         estado: "",
         transicoes: [],
@@ -200,12 +189,12 @@ export default {
     },
 
     automato() {
+      this.aceita = false;
       this.sequencia_execucao = [];
       let estados_finais = this.estados_finais.split(" ");
       let texto = this.texto.split("");
-
+      this.estados_atuais = [];
       this.estados_atuais.push(this.estado_inicial);
-      // this.estados_atuais.push("q1"); // Teste
 
       texto.forEach((c, index) => {
         let objs = this.funcao_transicao.filter((obj) =>
@@ -231,9 +220,14 @@ export default {
         });
         console.log(this.estados_atuais);
       });
-      this.aceita = this.estados_finais
-        .split(" ")
-        .includes(this.estados_atuais);
+      this.estados_finais.split(" ").forEach((ef) =>
+        this.estados_atuais.forEach((ea) => {
+          if (ef == ea) {
+            this.aceita = true;
+            return;
+          }
+        })
+      );
     },
   },
 };

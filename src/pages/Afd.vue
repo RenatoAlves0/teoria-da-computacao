@@ -17,10 +17,15 @@
                   placeholder="ex: q1 q2 q3"
                   v-model="estados_finais"
                 ></fg-input>
-                <a>*cada estado deve ser separado por espaço</a>
+                <a>cada estado deve ser separado por espaço</a>
 
                 <h5 style="margin-top: 15px">Função de Transição</h5>
-                <div class="row" v-for="item in funcao_transicao" :key="item.estado">
+                <div
+                  style="margin-left: 1px"
+                  class="row"
+                  v-for="item in funcao_transicao"
+                  :key="item.estado"
+                >
                   <badge style="margin-right: 5px" type="info">{{item.estado}}</badge>
                   <div v-for="t in item.transicoes" :key="t.simbolo">
                     <badge
@@ -57,10 +62,21 @@
           </div>
 
           <div class="col-md-4 ml-auto mr-auto">
+            <h5 v-if="sequencia_execucao[0]">Sequência de Execução</h5>
             <card type="login" plain>
               <div v-if="sequencia_execucao[0]" style="margin-bottom:10px">
-                <div v-for="(item, index) in sequencia_execucao" :key="index">
-                  <a>{{item.step}}</a>
+                <div
+                  class="row"
+                  style="margin-left: 1px"
+                  v-for="(item, index) in sequencia_execucao"
+                  :key="index"
+                >
+                  <badge style="margin-right: 5px" type>{{index}}</badge>
+                  <badge style="margin-right: 5px" type="info">{{item.step.estado}}</badge>
+                  <badge
+                    style="margin-right: 5px"
+                    type="success"
+                  >{{' ' + item.step.t_simbolo + ' -> ' + item.step.t_estado + ' '}}</badge>
                 </div>
                 <badge
                   style="margin-top: 10px"
@@ -69,6 +85,7 @@
               </div>
 
               <fg-input class="no-border input-lg" placeholder="String" v-model="texto"></fg-input>
+              <a>não insira simbolos que não fazem parte do alfabeto</a>
 
               <n-button
                 class="btn-block"
@@ -169,6 +186,7 @@ export default {
     },
 
     automato() {
+      this.aceita = false;
       this.sequencia_execucao = [];
       let estados_finais = this.estados_finais.split(" ");
       let texto = this.texto.split("");
@@ -180,12 +198,11 @@ export default {
           (obj) => obj.estado == this.estado_atual
         );
         let estado_aux = obj.transicoes.find((obj) => obj.simbolo == c);
-        let step =
-          this.estado_atual +
-          " : " +
-          estado_aux.simbolo +
-          " -> " +
-          estado_aux.estado;
+        let step = {
+          estado: this.estado_atual,
+          t_simbolo: estado_aux.simbolo,
+          t_estado: estado_aux.estado,
+        };
         this.sequencia_execucao.push({ step });
         this.estado_atual = estado_aux.estado;
       });
