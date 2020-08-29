@@ -218,7 +218,6 @@ export default {
             }
           }
         });
-        console.log(this.estados_atuais);
       });
       this.estados_finais.split(" ").forEach((ef) =>
         this.estados_atuais.forEach((ea) => {
