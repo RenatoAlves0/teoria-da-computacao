@@ -15,8 +15,14 @@
 
  */
 
-@import 'now-ui-kit/variables';
-@import 'now-ui-kit/mixins';
+.aviso {
+    font-size: small;
+    color: darkgray;
+    font-style: italic;
+}
+
+@import "now-ui-kit/variables";
+@import "now-ui-kit/mixins";
 
 // Plugins CSS
 @import "now-ui-kit/plugins/plugin-bootstrap-switch";
@@ -55,7 +61,6 @@
 // example pages and sections
 @import "now-ui-kit/example-pages";
 @import "now-ui-kit/sections";
-
 
 @import "now-ui-kit/responsive";
 

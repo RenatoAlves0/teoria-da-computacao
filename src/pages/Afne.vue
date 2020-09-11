@@ -3,7 +3,7 @@
     <div class="page-header-image" style="background-image: url('img/header.jpg')"></div>
     <div class="content">
       <div class="container">
-        <h3>Autômato Finito Não Determinístico (AFN)</h3>
+        <h3>Autômato Finito Não Determinístico com Transições ε (AFN-ε)</h3>
         <div class="row">
           <div class="col-md-4 ml-auto mr-auto">
             <card type="login" plain>
@@ -48,9 +48,14 @@
               ></fg-input>
 
               <h5>Símbolo</h5>
-              <fg-input class="no-border input-lg" placeholder="ex: 0" v-model="simbolo"></fg-input>
+              <fg-input
+                class="no-border input-lg"
+                placeholder="ex: epsilon, ex: 0"
+                v-model="simbolo"
+              ></fg-input>
+              <a class="aviso">escreva epsilon para se referir a ε</a>
 
-              <h5>Estado de Destino</h5>
+              <h5 style="margin-top: 10px">Estado de Destino</h5>
               <fg-input class="no-border input-lg" placeholder="ex: q1" v-model="estado"></fg-input>
               <a class="aviso">coloque um único estado de destino por vez</a>
               <n-button
@@ -90,6 +95,9 @@
                 >{{aceita? 'ACEITA':'REJEITADA'}}</badge>
               </div>
 
+              <a>ef: {{estados_finais}}</a>
+              <a>ea: {{estados_atuais}}</a>
+
               <fg-input class="no-border input-lg" placeholder="String" v-model="texto"></fg-input>
               <a class="aviso">não insira simbolos que não fazem parte do alfabeto</a>
 
@@ -125,10 +133,30 @@ export default {
     return {
       sequencia_execucao: [],
       texto: "",
-      estado_inicial: "",
+      estado_inicial: "q0",
       estados_atuais: [],
-      estados_finais: "",
-      funcao_transicao: [],
+      estados_finais: "q3",
+      funcao_transicao: [
+        {
+          estado: "q0",
+          transicoes: [
+            { simbolo: "0", estado: "q0" },
+            { simbolo: "epsilon", estado: "q1" },
+          ],
+        },
+        {
+          estado: "q1",
+          transicoes: [{ simbolo: "epsilon", estado: "q2" }],
+        },
+        {
+          estado: "q2",
+          transicoes: [{ simbolo: "epsilon", estado: "q3" }],
+        },
+        {
+          estado: "q3",
+          transicoes: [],
+        },
+      ],
       item_transicao: {
         estado: "",
         transicoes: [],
@@ -195,11 +223,10 @@ export default {
       this.aceita = false;
       this.sequencia_execucao = [];
       let estados_finais = this.estados_finais.split(" ");
-      let texto = this.texto.split("");
       this.estados_atuais = [];
       this.estados_atuais.push(this.estado_inicial);
 
-      texto.forEach((c, index) => {
+      this.texto.split("").forEach((c, index) => {
         let objs = this.funcao_transicao.filter((obj) =>
           this.estados_atuais.includes(obj.estado)
         );
@@ -207,11 +234,13 @@ export default {
         objs.forEach((t) => {
           let estados_aux = [];
           if (t.transicoes) {
-            estados_aux = t.transicoes.filter((obj) => obj.simbolo == c);
+            estados_aux = t.transicoes.filter(
+              (obj) => obj.simbolo == c || obj.simbolo == "epsilon"
+            );
             if (estados_aux[0]) {
-              estados_aux.forEach((item) =>
-                this.estados_atuais.push(item.estado)
-              );
+              estados_aux.forEach((item) => {
+                this.estados_atuais.push(item.estado);
+              });
               let step = {
                 index: index,
                 estado: t.estado,
@@ -222,6 +251,47 @@ export default {
           }
         });
       });
+
+      /////////////////////////
+      let aux_estados_atuais = this.estados_atuais;
+      let continuar = true;
+
+      while (continuar) {
+        let itens_funcao_transicao = this.funcao_transicao.filter((obj) =>
+          this.estados_atuais.includes(obj.estado)
+        );
+
+        let aux_ea = this.estados_atuais;
+        this.estados_atuais = [];
+        itens_funcao_transicao.forEach((t) => {
+          let estados_aux = [];
+          if (t.transicoes) {
+            estados_aux = t.transicoes.filter(
+              (obj) => obj.simbolo == "epsilon"
+            );
+            if (estados_aux[0]) {
+              console.log("estados_aux");
+              console.log(estados_aux);
+
+              estados_aux.forEach((item) => {
+                this.estados_atuais.push(item.estado);
+              });
+              let step = {
+                // index: index,
+                estado: t.estado,
+                transicoes: estados_aux,
+              };
+              this.sequencia_execucao.push({ step });
+            }
+          }
+        });
+        if (!this.estados_atuais[0]) {
+          this.estados_atuais = aux_ea;
+          continuar = false;
+        }
+      }
+      /////////////////////////
+
       this.estados_finais.split(" ").forEach((ef) =>
         this.estados_atuais.forEach((ea) => {
           if (ef == ea) {

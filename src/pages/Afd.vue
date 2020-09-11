@@ -17,7 +17,7 @@
                   placeholder="ex: q1 q2 q3"
                   v-model="estados_finais"
                 ></fg-input>
-                <a>cada estado deve ser separado por espaço</a>
+                <a class="aviso">cada estado deve ser separado por espaço</a>
 
                 <h5 style="margin-top: 15px">Função de Transição</h5>
                 <div
@@ -40,15 +40,18 @@
 
           <div class="col-md-4 ml-auto mr-auto">
             <card type="login" plain>
+              <h5>Estado de Origem</h5>
               <fg-input
                 class="no-border input-lg"
-                placeholder="Estado de origem"
+                placeholder="ex: q0"
                 v-model="item_transicao.estado"
               ></fg-input>
 
-              <fg-input class="no-border input-lg" placeholder="Símbolo" v-model="simbolo"></fg-input>
+              <h5>Símbolo</h5>
+              <fg-input class="no-border input-lg" placeholder="ex: 0" v-model="simbolo"></fg-input>
 
-              <fg-input class="no-border input-lg" placeholder="Estado de destino" v-model="estado"></fg-input>
+              <h5>Estado de Destino</h5>
+              <fg-input class="no-border input-lg" placeholder="ex: q1" v-model="estado"></fg-input>
               <n-button
                 v-if="item_transicao.estado != '' && simbolo != '' && estado != ''"
                 class="btn-block"
@@ -85,7 +88,7 @@
               </div>
 
               <fg-input class="no-border input-lg" placeholder="String" v-model="texto"></fg-input>
-              <a>não insira simbolos que não fazem parte do alfabeto</a>
+              <a class="aviso">não insira simbolos que não fazem parte do alfabeto</a>
 
               <n-button
                 class="btn-block"
