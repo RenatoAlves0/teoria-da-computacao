@@ -198,15 +198,6 @@ export default {
     };
   },
   methods: {
-    // {
-    //   estado: "q0",
-    //   transicoes: [
-    // { simbolo: "0", estado: "q0" },
-    // { simbolo: "0", estado: "q1" },
-    // { simbolo: "1", estado: "q1" },
-    //   ],
-    // },
-
     converter() {
       this.iniciar_conversao_afd();
       let continuar = true;
@@ -223,19 +214,15 @@ export default {
           );
         });
         this.separar_simbolos_agrupar_estados(estados_agrupados, i);
-        // CORRIGIR A CONDIÇÃO ABAIXO
-        // continuar = false;
-        i = i + 1;
+        i++;
       }
     },
 
     separar_simbolos_agrupar_estados(itens, index) {
-      // console.log(itens);
       let simbolos = [];
       itens.forEach((e) => {
         if (!simbolos.includes(e.simbolo)) simbolos.push(e.simbolo);
       });
-      console.log(simbolos);
       simbolos.forEach((e) => {
         this.simbolo_afd = e;
         this.estado_afd = "";
