@@ -20,6 +20,7 @@
       <drop-down tag="li" title=" Recursos" icon="now-ui-icons education_paper" class="nav-item">
         <nav-link to="/">AFD</nav-link>
         <nav-link to="/afn">AFN</nav-link>
+        <nav-link to="/afntoafd">AFN para AFD</nav-link>
         <!-- <nav-link to="/afne">AFN-ε</nav-link> -->
       </drop-down>
     </template>
