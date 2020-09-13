@@ -7,32 +7,27 @@
         <div class="row">
           <div class="col-md-4 ml-auto mr-auto">
             <card type="login" plain>
-              <div slot="header">
-                <h5>Estado Inicial</h5>
-                <fg-input class="no-border input-lg" placeholder="ex: q0" v-model="estado_inicial"></fg-input>
+              <h5>Estado Inicial</h5>
+              <fg-input class="no-border input-lg" placeholder="ex: q0" v-model="estado_inicial"></fg-input>
 
-                <h5>Estados Finais</h5>
-                <fg-input
-                  class="no-border input-lg"
-                  placeholder="ex: q1 q2 q3"
-                  v-model="estados_finais"
-                ></fg-input>
-                <a class="aviso">cada estado deve ser separado por espaço</a>
+              <h5>Estados Finais</h5>
+              <fg-input
+                class="no-border input-lg"
+                placeholder="ex: q1 q2 q3"
+                v-model="estados_finais"
+              ></fg-input>
+              <a class="aviso">cada estado deve ser separado por espaço</a>
 
-                <h5 style="margin-top: 15px">Função de Transição</h5>
-                <div
-                  style="margin-left: 1px"
-                  class="row"
-                  v-for="item in funcao_transicao"
-                  :key="item.estado"
-                >
-                  <badge style="margin-right: 5px" type="info">{{item.estado}}</badge>
-                  <div v-for="t in item.transicoes" :key="t.simbolo">
-                    <badge
-                      style="margin-right: 5px"
-                      type="success"
-                    >{{t.simbolo + ' -> ' + t.estado}}</badge>
-                  </div>
+              <h5 style="margin-top: 15px">Função de Transição</h5>
+              <div
+                style="margin-left: 1px"
+                class="row"
+                v-for="item in funcao_transicao"
+                :key="item.estado"
+              >
+                <badge style="margin-right: 5px" type="info">{{item.estado}}</badge>
+                <div v-for="t in item.transicoes" :key="t.simbolo">
+                  <badge style="margin-right: 5px" type="success">{{t.simbolo + ' -> ' + t.estado}}</badge>
                 </div>
               </div>
             </card>
@@ -64,29 +59,33 @@
             </card>
           </div>
 
-          <div class="col-md-4 ml-auto mr-auto">
-            <h5 v-if="sequencia_execucao[0]">Sequência de Execução</h5>
-            <card type="login" plain>
-              <div v-if="sequencia_execucao[0]" style="margin-bottom:10px">
-                <div
-                  class="row"
-                  style="margin-left: 1px"
-                  v-for="(item, index) in sequencia_execucao"
-                  :key="index"
-                >
-                  <badge style="margin-right: 5px" type>{{index}}</badge>
-                  <badge style="margin-right: 5px" type="info">{{item.step.estado}}</badge>
-                  <badge
-                    style="margin-right: 5px"
-                    type="success"
-                  >{{' ' + item.step.t_simbolo + ' -> ' + item.step.t_estado + ' '}}</badge>
-                </div>
+          <modal :show.sync="sequencia_execucao[0]" headerClasses="justify-content-center">
+            <h4
+              slot="header"
+              :class="aceita? 'text-success title':'text-danger title'"
+            >{{aceita? 'String Aceita' : 'String Rejeitada'}}</h4>
+            <div style="padding: 20px">
+              <div class="row" v-for="(item, index) in sequencia_execucao" :key="index">
+                <badge style="margin-right: 5px" type="default">{{index}}</badge>
+                <badge style="margin-right: 5px" type="info">{{item.step.estado}}</badge>
                 <badge
-                  style="margin-top: 10px"
-                  :type="aceita? 'success':'danger'"
-                >{{aceita? 'ACEITA':'REJEITADA'}}</badge>
+                  style="margin-right: 5px"
+                  :type="aceita? 'success' : 'danger'"
+                >{{' ' + item.step.t_simbolo + ' -> ' + item.step.t_estado + ' '}}</badge>
               </div>
+            </div>
+            <n-button
+              :type="aceita? 'success' : 'danger'"
+              class="btn-block"
+              size="lg"
+              round
+              @click.native="modals.classic = sequencia_execucao = []"
+            >Fechar</n-button>
+          </modal>
 
+          <div class="col-md-4 ml-auto mr-auto">
+            <card type="login" plain>
+              <h5>Testes</h5>
               <fg-input class="no-border input-lg" placeholder="String" v-model="texto"></fg-input>
               <a class="aviso">não insira simbolos que não fazem parte do alfabeto</a>
 
@@ -106,7 +105,7 @@
   </div>
 </template>
 <script>
-import { Card, Button, FormGroupInput, Badge } from "@/components";
+import { Card, Button, FormGroupInput, Badge, Modal } from "@/components";
 import MainFooter from "@/layout/MainFooter";
 export default {
   name: "login-page",
@@ -117,6 +116,7 @@ export default {
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput,
     Badge,
+    Modal,
   },
   data() {
     return {

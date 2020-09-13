@@ -13,14 +13,11 @@
       role="dialog"
       :aria-hidden="!show"
     >
-      <div
-        class="modal-dialog"
-        :class="[{ 'modal-notice': type === 'notice' }, modalClasses]"
-      >
+      <div class="modal-dialog" :class="[{ 'modal-notice': type === 'notice' }, modalClasses]">
         <div class="modal-content">
           <slot name="base-content">
             <div class="modal-header" :class="headerClasses">
-              <slot name="close-button">
+              <!-- <slot name="close-button">
                 <button
                   type="button"
                   v-if="showClose"
@@ -31,7 +28,7 @@
                 >
                   <i class="now-ui-icons ui-1_simple-remove"></i>
                 </button>
-              </slot>
+              </slot>-->
               <slot name="header"></slot>
             </div>
 
@@ -49,26 +46,26 @@
   </SlideYUpTransition>
 </template>
 <script>
-import { SlideYUpTransition } from 'vue2-transitions';
+import { SlideYUpTransition } from "vue2-transitions";
 
 export default {
-  name: 'modal',
+  name: "modal",
   components: {
-    SlideYUpTransition
+    SlideYUpTransition,
   },
   props: {
     show: Boolean,
     showClose: {
       type: Boolean,
-      default: true
+      default: true,
     },
     type: {
       type: String,
-      default: '',
+      default: "",
       validator(value) {
-        let acceptedValues = ['', 'notice', 'mini'];
+        let acceptedValues = ["", "notice", "mini"];
         return acceptedValues.indexOf(value) !== -1;
-      }
+      },
     },
     modalClasses: [Object, String],
     headerClasses: [Object, String],
@@ -76,25 +73,25 @@ export default {
     footerClasses: [Object, String],
     animationDuration: {
       type: Number,
-      default: 500
-    }
+      default: 500,
+    },
   },
   methods: {
     closeModal() {
-      this.$emit('update:show', false);
-      this.$emit('close');
-    }
+      this.$emit("update:show", false);
+      this.$emit("close");
+    },
   },
   watch: {
     show(val) {
       let documentClasses = document.body.classList;
       if (val) {
-        documentClasses.add('modal-open');
+        documentClasses.add("modal-open");
       } else {
-        documentClasses.remove('modal-open');
+        documentClasses.remove("modal-open");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
