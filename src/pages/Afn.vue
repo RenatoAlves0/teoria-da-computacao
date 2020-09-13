@@ -410,8 +410,6 @@ export default {
           }
         });
       });
-      console.log(this.estados_finais.split(" "));
-      console.log(this.estados_atuais);
     },
   },
 };

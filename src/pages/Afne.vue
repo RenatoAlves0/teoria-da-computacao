@@ -270,9 +270,6 @@ export default {
               (obj) => obj.simbolo == "epsilon"
             );
             if (estados_aux[0]) {
-              console.log("estados_aux");
-              console.log(estados_aux);
-
               estados_aux.forEach((item) => {
                 this.estados_atuais.push(item.estado);
               });
