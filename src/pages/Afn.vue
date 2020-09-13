@@ -1,6 +1,6 @@
 <template>
   <div class="page-header clear-filter" filter-color="orange">
-    <div class="page-header-image" style="background-image: url('img/header.jpg')"></div>
+    <div class="page-header-image" style="background-image: url('img/cabecalho.jpg')"></div>
     <div class="content">
       <div class="container">
         <h3>Autômato Finito Não Determinístico (AFN)</h3>
@@ -18,7 +18,10 @@
               ></fg-input>
               <a class="aviso">cada estado deve ser separado por espaço</a>
 
-              <h5 style="margin-top: 15px">Função de Transição</h5>
+              <h5
+                v-if="funcao_transicao && funcao_transicao[0]"
+                style="margin-top: 15px"
+              >Função de Transição</h5>
               <div
                 style="margin-left: 1px"
                 class="row"
@@ -151,36 +154,36 @@ export default {
     return {
       sequencia_execucao: [],
       texto: "",
-      estado_inicial: "q0",
+      estado_inicial: "",
       estados_atuais: [],
-      estados_finais: "q3",
+      estados_finais: "",
       funcao_transicao: [
-        {
-          estado: "q0",
-          transicoes: [
-            { simbolo: "0", estado: "q0" },
-            { simbolo: "0", estado: "q1" },
-            { simbolo: "1", estado: "q0" },
-          ],
-        },
-        {
-          estado: "q1",
-          transicoes: [
-            { simbolo: "0", estado: "q2" },
-            { simbolo: "1", estado: "q2" },
-          ],
-        },
-        {
-          estado: "q2",
-          transicoes: [{ simbolo: "0", estado: "q3" }],
-        },
-        {
-          estado: "q3",
-          transicoes: [
-            { simbolo: "0", estado: "q3" },
-            { simbolo: "1", estado: "q3" },
-          ],
-        },
+        // {
+        //   estado: "q0",
+        //   transicoes: [
+        //     { simbolo: "0", estado: "q0" },
+        //     { simbolo: "0", estado: "q1" },
+        //     { simbolo: "1", estado: "q0" },
+        //   ],
+        // },
+        // {
+        //   estado: "q1",
+        //   transicoes: [
+        //     { simbolo: "0", estado: "q2" },
+        //     { simbolo: "1", estado: "q2" },
+        //   ],
+        // },
+        // {
+        //   estado: "q2",
+        //   transicoes: [{ simbolo: "0", estado: "q3" }],
+        // },
+        // {
+        //   estado: "q3",
+        //   transicoes: [
+        //     { simbolo: "0", estado: "q3" },
+        //     { simbolo: "1", estado: "q3" },
+        //   ],
+        // },
       ],
       funcao_transicao_afd: [],
       item_transicao: {

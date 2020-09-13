@@ -21,6 +21,11 @@
     font-style: italic;
 }
 
+.aviso:hover {
+    color: white;
+    text-decoration: none;
+}
+
 @import "now-ui-kit/variables";
 @import "now-ui-kit/mixins";
 

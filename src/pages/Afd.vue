@@ -18,7 +18,10 @@
               ></fg-input>
               <a class="aviso">cada estado deve ser separado por espaço</a>
 
-              <h5 style="margin-top: 15px">Função de Transição</h5>
+              <h5
+                v-if="funcao_transicao && funcao_transicao[0]"
+                style="margin-top: 15px"
+              >Função de Transição</h5>
               <div
                 style="margin-left: 1px"
                 class="row"
