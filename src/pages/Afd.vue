@@ -133,8 +133,25 @@ export default {
       simbolo: "",
       estado: "",
       aceita: false,
+      convertido: false,
     };
   },
+
+  mounted() {
+    let prop = this.$router.app._route.params;
+    if (
+      prop &&
+      prop.estado_inicial &&
+      prop.estados_finais &&
+      prop.funcao_transicao
+    ) {
+      this.estado_inicial = prop.estado_inicial;
+      this.estados_finais = prop.estados_finais;
+      this.funcao_transicao = prop.funcao_transicao;
+      this.convertido = true;
+    }
+  },
+
   methods: {
     add_transicao() {
       let index;
@@ -210,6 +227,16 @@ export default {
         this.estado_atual = estado_aux.estado;
       });
       this.aceita = this.estados_finais.split(" ").includes(this.estado_atual);
+      if (this.convertido) {
+        this.estados_finais.split(" ").forEach((ef) => {
+          this.estado_atual.split(" ").forEach((ea) => {
+            if (ef == ea) {
+              this.aceita = true;
+              return;
+            }
+          });
+        });
+      }
     },
   },
 };

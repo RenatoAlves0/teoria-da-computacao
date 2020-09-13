@@ -4,7 +4,6 @@ import Index from './pages/Index.vue';
 import Afd from './pages/Afd.vue';
 import Afn from './pages/Afn.vue';
 import Afne from './pages/Afne.vue';
-import AfnToAfd from './pages/AfnToAfd.vue';
 import MainNavbar from './layout/MainNavbar.vue';
 import MainFooter from './layout/MainFooter.vue';
 
@@ -33,14 +32,6 @@ export default new Router({
       path: '/afne',
       name: 'afne',
       components: { default: Afne, header: MainNavbar },
-      props: {
-        header: { colorOnScroll: 400 }
-      }
-    },
-    {
-      path: '/afntoafd',
-      name: 'afntoafd',
-      components: { default: AfnToAfd, header: MainNavbar },
       props: {
         header: { colorOnScroll: 400 }
       }
